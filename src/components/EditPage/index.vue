@@ -6,16 +6,18 @@
       <quillEditor v-model="formData.content"
                    ref="myQuillEditor"
                     :options="formData.editorOption"
-                   @blur="onEditorBlur($event)">
+                   @change="onEditorChange($event)">
       </quillEditor>
-      <div class="catelogl">
-        <span>分类：</span>
+      <div class="catelogl clearfix">
+        <span class="fll">分类：</span>
+        <G-Radios :radios="categories" v-model="formData.tags" name="category"></G-Radios>
       </div>
-      <el-button type="primary">保存笔记</el-button>
+      <el-button type="primary" @click="articleSubmit">保存笔记</el-button>
     </div>
 </template>
 
 <script>
+  import GRadios from  '../templates/GRadio'
   import 'quill/dist/quill.snow.css'
   import {quillEditor, Quill} from 'vue-quill-editor'
   import {container, ImageExtend, QuillWatch} from 'quill-image-extend-module'
@@ -27,6 +29,8 @@
         formData: {
           title: '测试标题',
           content: '<p>测试内容</p>',
+          contentText: '',
+          tags: '',
           editorOption: {
             modules: {
               ImageExtend: {
@@ -51,14 +55,28 @@
       }
     },
     components: {
-      quillEditor
+      quillEditor,
+      GRadios
     },
     methods: {
-      onEditorBlur(quill) {},
       getCategories() {
         this.$axios.get('/category').then(res => {
           this.categories = res.data
         })
+      },
+      onEditorChange({ quill, html, text }) {
+        this.formData.contentText = text.substring(0, 200)+ '...'
+      },
+      articleSubmit () {
+        if (this.formData.title && this.formData.tags) {
+          this.$axios.post('/article', this.formData).then(res => {
+            this.$message.success(res.msg)
+            setTimeout(() => {}, 500)
+          })
+        } else {
+          this.$message.warning('必要填写标题和分类')
+        }
+
       }
     },
     created() {
@@ -85,6 +103,7 @@
     font-size: 12px;
     span {
       color: #409eff;
+      line-height: 1.5;
     }
   }
 }

@@ -9,7 +9,8 @@ const components = {
   layout : () => import('@/views/layout'),
   home: () => import('@/components/Home'),
   register: () => import('@/components/Register'),
-  editPage: () => import('@/components/EditPage')
+  editPage: () => import('@/components/EditPage'),
+  articleDetail: () => import('@/components/readArticle')
 }
 
 const router =  new Router({
@@ -30,7 +31,7 @@ const router =  new Router({
         },
         {
           path: 'register',
-          name: '用户注册',
+          name: 'register',
           meta: {
             title: '用户注册'
           },
@@ -38,11 +39,19 @@ const router =  new Router({
         },
         {
           path: 'editpage',
-          name: '写笔记',
+          name: 'editpage',
           meta: {
             title: '写笔记',
           },
           component: components.editPage
+        },
+        {
+          path: 'readarticle',
+          name: 'readarticle',
+          meta: {
+            title: '文章详情'
+          },
+          component: components.articleDetail
         }
       ]
     }

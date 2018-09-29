@@ -34,7 +34,12 @@ const $axios = {
 
   post (url, data, config) {
     return this.fetch(url, data, config)
+  },
+
+  put (url, data, config) {
+    return this.fetch(url, data, config, 'put ')
   }
+
 }
 
 export default $axios

@@ -25,6 +25,7 @@
 <style scoped lang="scss">
   .content {
     margin-top: 100px;
+    margin-bottom: 50px;
   }
 .img-wrap {
   position: relative;
