@@ -5,15 +5,25 @@
         <router-link to="/">云笔记</router-link>
       </div>
       <div class="flr">
-        <el-button @click="$router.push('/editpage')">写笔记</el-button>
+        <el-button @click="toEdit">写笔记</el-button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+  import { mapState } from 'vuex'
   export default {
-
+    methods: {
+      toEdit () {
+        if (this.$store.state.userinfo) {
+          this.$router.push('/editpage')
+        } else {
+          this.$message.warning('请先登录')
+        }
+      }
+    },
+    computed: {}
   }
 </script>
 
@@ -23,7 +33,7 @@
     top: 0;
     left: 0;
     right: 0;
-    z-index: 99999;
+    z-index: 99;
     padding: 5px 0;
     background: #409eff;
   }

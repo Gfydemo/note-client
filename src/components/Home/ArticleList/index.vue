@@ -1,34 +1,41 @@
 <template>
     <router-link to="#" class="article-wrapper mt30 fll">
-      <!--文章信息部分 start-->
-      <div class="article-msg clearfix">
-        <div class="avatar-wrap fll">
-          <img src="http://pbl.yaojunrong.com/avatar1.jpg" alt="">
-        </div>
-        <div class="msg-wrap fll">
-          <div class="row1">
-            <span class="author">耿飞阳</span>
-            <span class="divide">|</span>
-            <span class="title">标题</span>
+      <div v-show="$store.state.userinfo">
+        <!--文章信息部分 start-->
+        <div class="article-msg clearfix">
+          <div class="avatar-wrap fll">
+            <img src="http://pbl.yaojunrong.com/avatar1.jpg" alt="">
           </div>
-          <div class="row2">
-            浏览：<span>3</span>
-            回复：<span>0</span>
-            分类：<span>怀旧</span>
+          <div class="msg-wrap fll">
+            <div class="row1">
+              <span class="author">耿飞阳</span>
+              <span class="divide">|</span>
+              <span class="title">标题</span>
+            </div>
+            <div class="row2">
+              浏览：<span>3</span>
+              回复：<span>0</span>
+              分类：<span>怀旧</span>
+            </div>
           </div>
         </div>
-      </div>
-      <!--文章信息部分 end-->
+        <!--文章信息部分 end-->
 
-      <!--文章内容部分 start-->
-      <div class="article-content">今天天气真好...</div>
-      <!--文章内容部分 end-->
+        <!--文章内容部分 start-->
+        <div class="article-content">今天天气真好...</div>
+        <!--文章内容部分 end-->
+      </div>
     </router-link>
 </template>
 
 <script>
+  import { mapState } from 'vuex'
     export default {
-        name: 'index'
+        name: 'index',
+      data () {
+        return {}
+      },
+      computed: {}
     }
 </script>
 

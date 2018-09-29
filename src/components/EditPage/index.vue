@@ -9,7 +9,7 @@
                    @blur="onEditorBlur($event)">
       </quillEditor>
       <div class="catelogl">
-        分类：
+        <span>分类：</span>
       </div>
       <el-button type="primary">保存笔记</el-button>
     </div>
@@ -23,6 +23,7 @@
   export default {
     data () {
       return {
+        categories: [],
         formData: {
           title: '测试标题',
           content: '<p>测试内容</p>',
@@ -53,7 +54,15 @@
       quillEditor
     },
     methods: {
-      onEditorBlur(quill) {}
+      onEditorBlur(quill) {},
+      getCategories() {
+        this.$axios.get('/category').then(res => {
+          this.categories = res.data
+        })
+      }
+    },
+    created() {
+      this.getCategories()
     }
   }
 </script>
@@ -72,7 +81,11 @@
     min-height: 300px;
   }
   .catelogl {
-    margin: 10px;
+    margin: 20px 10px;
+    font-size: 12px;
+    span {
+      color: #409eff;
+    }
   }
 }
 </style>
