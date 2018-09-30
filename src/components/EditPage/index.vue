@@ -21,10 +21,12 @@
   import 'quill/dist/quill.snow.css'
   import {quillEditor, Quill} from 'vue-quill-editor'
   import {container, ImageExtend, QuillWatch} from 'quill-image-extend-module'
+  import axios from 'axios'
   Quill.register('modules/ImageExtend', ImageExtend)
   export default {
     data () {
       return {
+        token: '',
         categories: [],
         formData: {
           title: '测试标题',
@@ -35,10 +37,15 @@
             modules: {
               ImageExtend: {
                 loading: true,
-                name: 'img',
-                action: "",
+                name: 'file',
+                action: "https://upload-z1.qiniup.com",
                 response: (res) => {
-                  return res.info
+                  return res.url
+                },
+                headers: (xhr) => {
+                },
+                change: (xhr, formData) => {
+                  formData.append('token', this.token)
                 }
               },
               toolbar: {
@@ -76,11 +83,16 @@
         } else {
           this.$message.warning('必要填写标题和分类')
         }
-
+      },
+      getToken () {
+        axios.get('http://upload.yaojunrong.com/getToken').then(res => {
+          this.token = res.data.data
+        })
       }
     },
     created() {
       this.getCategories()
+      this.getToken()
     }
   }
 </script>
