@@ -52,7 +52,6 @@
     methods: {
       async getData() {
         this.id = this.$route.query.id
-        await this.$axios.put(`/looknum/${this.id}`)
         this.$axios.get(`/article/${this.id}`).then(res => {
           this.acticleData = res.data
           let createdTime = this.changeTime(res.data.createdTime)

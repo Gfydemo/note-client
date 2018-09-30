@@ -1,6 +1,6 @@
 <template>
     <div class="article-wrapper mt30 fll">
-      <router-link :to="{name: 'readarticle', query: {id: item._id}}" class="wrap" v-for="(item, index) in articleList" :key="index">
+      <div @click="toRead(item._id)" class="wrap" v-for="(item, index) in articleList" :key="index">
         <!--文章信息部分 start-->
         <div class="article-msg clearfix">
           <div class="avatar-wrap fll">
@@ -24,7 +24,7 @@
         <!--文章内容部分 start-->
         <div class="article-content">{{item.contentText}}</div>
         <!--文章内容部分 end-->
-      </router-link>
+      </div>
     </div>
 </template>
 
@@ -41,7 +41,11 @@
             this.$axios.get('/article').then(res => {
               this.articleList = res.data
             })
-          }
+          },
+        toRead (id) {
+            this.$router.push({name: 'readarticle', query: {id}})
+            this.$axios.put(`/looknum/${id}`)
+        }
       },
       computed: {},
       created () {
@@ -60,6 +64,7 @@
 }
 .wrap {
   margin-top: 10px;
+  cursor: pointer;
 }
   .article-msg {
     .avatar-wrap {
