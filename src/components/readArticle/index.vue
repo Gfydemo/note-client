@@ -24,8 +24,10 @@
       <span class="comment-title">评论</span>
       <div class="comment-user clearfix">
         <img class="fll" :src="userinfo.avatar" alt="评论头像">
-        <div class="fll" style="width: 810px; margin-left: 20px;"><el-input placeholder="请输入"></el-input></div>
-        <el-button type="primary" size="mini">发布</el-button>
+        <div class="fll" style="width: 810px; margin-left: 20px;">
+          <el-input v-model="commentData.content" placeholder="输入评论..." ></el-input>
+        </div>
+        <el-button :disabled="commentData.content.length > 0? false : true " type="primary" size="mini">发布</el-button>
       </div>
     </div>
     <!--评论区 end-->
@@ -40,6 +42,9 @@
     data () {
       return {
         id: '',
+        commentData: {
+          content: ''
+        },
         acticleData: {
           author: '',
           authorMsg: {
