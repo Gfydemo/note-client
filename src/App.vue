@@ -37,6 +37,10 @@ export default {
     margin-top: 30px;
   }
 
+  .mt100 {
+    margin-top: 100px;
+  }
+
   .clearfix::after {
     content: '';
     display: block;

@@ -78,7 +78,9 @@
         if (this.formData.title && this.formData.tags) {
           this.$axios.post('/article', this.formData).then(res => {
             this.$message.success(res.msg)
-            setTimeout(() => {}, 500)
+            setTimeout(() => {
+              this.$router.push('/personalcenter')
+            }, 500)
           })
         } else {
           this.$message.warning('必要填写标题和分类')

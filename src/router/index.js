@@ -10,7 +10,8 @@ const components = {
   home: () => import('@/components/Home'),
   register: () => import('@/components/Register'),
   editPage: () => import('@/components/EditPage'),
-  articleDetail: () => import('@/components/readArticle')
+  articleDetail: () => import('@/components/readArticle'),
+  personalCenter: () => import('@/components/personalCenter')
 }
 
 const router =  new Router({
@@ -52,6 +53,14 @@ const router =  new Router({
             title: '文章详情'
           },
           component: components.articleDetail
+        },
+        {
+          path: 'personalcenter',
+          name: 'personalcenter',
+          meta: {
+            title: '个人主页'
+          },
+          component: components.personalCenter
         }
       ]
     }
