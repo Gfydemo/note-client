@@ -38,6 +38,13 @@ const $axios = {
 
   put (url, data, config) {
     return this.fetch(url, data, config, 'put')
+  },
+
+  changeTime(ISOtime) {
+    let time = ISOtime.split('T')[0]
+    let times = time.split('-')
+    let timeStr = `${times[0]}年${times[2]}月${times[2]}日`
+    return timeStr
   }
 
 }

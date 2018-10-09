@@ -25,25 +25,28 @@
       <div class="comment-user clearfix">
         <img class="fll" :src="userinfo.avatar" alt="评论头像">
         <div class="fll" style="width: 810px; margin-left: 20px;">
-          <el-input v-model="commentData.content" placeholder="输入评论..." ></el-input>
+          <el-input @keyup.enter.native="submitComment" v-model="commentData.content" placeholder="输入评论..." ></el-input>
         </div>
-        <el-button :disabled="commentData.content.length > 0? false : true " type="primary" size="mini">发布</el-button>
+        <el-button @click="submitComment" :disabled="commentData.content.length > 0? false : true " type="primary" size="mini">发布</el-button>
       </div>
     </div>
     <!--评论区 end-->
-
+    <comment :articleId="id" :refresh="isrefresh"></comment>
   </div>
 </template>
 
 <script>
   import { mapState } from 'vuex'
+  import comment  from '../commentList'
   export default {
     name: 'index',
     data () {
       return {
         id: '',
+        isrefresh: true,
         commentData: {
-          content: ''
+          content: '',
+          articleId: ''
         },
         acticleData: {
           author: '',
@@ -54,20 +57,26 @@
         }
       }
     },
+    components: {
+      comment
+    },
     methods: {
       async getData() {
         this.id = this.$route.query.id
+        this.commentData.articleId = this.$route.query.id
         this.$axios.get(`/article/${this.id}`).then(res => {
           this.acticleData = res.data
-          let createdTime = this.changeTime(res.data.createdTime)
+          let createdTime = this.$axios.changeTime(res.data.createdTime)
           this.acticleData = {...this.acticleData, createdTime}
         })
       },
-      changeTime(ISOtime) {
-        let time = ISOtime.split('T')[0]
-        let times = time.split('-')
-        let timeStr = `${times[0]}年${times[2]}月${times[2]}日`
-        return timeStr
+      submitComment() {
+        this.$axios.post('/comment', this.commentData).then(res => {
+          this.$message.success(res.msg)
+          this.isrefresh = !this.isrefresh
+          this.commentData.content = ''
+        })
+        this.$axios.put(`/commontnum/${this.id}`)
       }
     },
     computed: {
